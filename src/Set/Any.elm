@@ -22,15 +22,15 @@ module Set.Any
         )
 
 {-| A set of unique values. Similar to elm/core Set but allows arbitrary data
-given function for converting to `comparable` can be provided.
+given a function for converting to `comparable` can be provided.
 
 Insert, remove, and query operations all take O(log n) time.
 
 
 # Converting Types to Comparable
 
-When writing a function for conversion from the type you want to use within set to comparable
-it's very important to make sure every distinct member of type produces different value in set of comparables.
+When writing a function for conversion from the type you want to use within a set to comparable
+it's very important to make sure every distinct member of the type produces different value in the set of comparables.
 
 Take for instance those two examples:
 
