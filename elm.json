@@ -1,20 +1,16 @@
 {
-    "type": "application",
-    "source-directories": [
-        "src"
+    "type": "package",
+    "name": "turboMaCk/any-set",
+    "summary": "Sets with custom key types.",
+    "license": "BSD-3-Clause",
+    "version": "1.0.0",
+    "exposed-modules": [
+        "Set.Any"
     ],
-    "elm-version": "0.19.0",
+    "elm-version": "0.19.0 <= v < 0.20.0",
     "dependencies": {
-        "direct": {
-            "elm/core": "1.0.0",
-            "turboMaCk/any-dict": "1.0.1"
-        },
-        "indirect": {
-            "elm/json": "1.0.0"
-        }
+        "elm/core": "1.0.0 <= v < 2.0.0",
+        "turboMaCk/any-dict": "1.0.1 <= v < 2.0.0"
     },
-    "test-dependencies": {
-        "direct": {},
-        "indirect": {}
-    }
+    "test-dependencies": {}
 }
