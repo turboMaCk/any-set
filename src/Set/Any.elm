@@ -1,12 +1,25 @@
-module Set.Any exposing
-    ( AnySet(..)
-    , empty, singleton, insert, remove
-    , isEmpty, member, size
-    , union, intersect, diff
-    , toList, fromList
-    , map, foldl, foldr, filter, partition
-    , toSet
-    )
+module Set.Any
+    exposing
+        ( AnySet(..)
+        , diff
+        , empty
+        , filter
+        , foldl
+        , foldr
+        , fromList
+        , insert
+        , intersect
+        , isEmpty
+        , map
+        , member
+        , partition
+        , remove
+        , singleton
+        , size
+        , toList
+        , toSet
+        , union
+        )
 
 {-| A set of unique values. Similar to elm/core Set but allows arbitrary data
 given function for converting to `comparable` can be provided.
@@ -106,8 +119,8 @@ type AnySet comparable t
 
 {-| Create an empty set.
 
-\*\* Note that it's important to make sure every key is turned to different comparable.
-Otherwise keys would conflict and overwritede each other.\*\*
+** Note that it's important to make sure every key is turned to different comparable.
+Otherwise keys would conflict and overwritede each other.**
 
 -}
 empty : (a -> comparable) -> AnySet comparable a
@@ -117,8 +130,8 @@ empty =
 
 {-| Create a set with one value.
 
-\*\* Note that it's important to make sure every key is turned to different comparable.
-Otherwise keys would conflict and overwritede each other.\*\*
+** Note that it's important to make sure every key is turned to different comparable.
+Otherwise keys would conflict and overwritede each other.**
 
 -}
 singleton : a -> (a -> comparable) -> AnySet comparable a
@@ -235,7 +248,7 @@ partition f (AnySet dict) =
         |> Tuple.mapSecond AnySet
 
 
-{-| Convers any set to core Set of comparables
+{-| Convert AnySet to elm/core Set of comparable
 -}
 toSet : AnySet comparable a -> Set comparable
 toSet (AnySet dict) =
