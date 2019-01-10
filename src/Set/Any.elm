@@ -210,7 +210,7 @@ fromList toComparable =
     AnySet << Dict.Any.fromList toComparable << List.map (\a -> ( a, () ))
 
 
-{-| Fold over the values in a set, in order from lowest to highest.
+{-| Apply a function to all values in a set.
 -}
 map : (b -> comparable2) -> (a -> b) -> AnySet comparable a -> AnySet comparable2 b
 map toComparable f =
