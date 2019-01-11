@@ -210,7 +210,7 @@ fromList toComparable =
     AnySet << Dict.Any.fromList toComparable << List.map (\a -> ( a, () ))
 
 
-{-| Apply a function to all values in a set.
+{-| Map a function onto a set, creating a new set with no duplicates.
 -}
 map : (b -> comparable2) -> (a -> b) -> AnySet comparable a -> AnySet comparable2 b
 map toComparable f =
@@ -224,7 +224,7 @@ foldl f init (AnySet dict) =
     Dict.Any.foldl (\x _ acc -> f x acc) init dict
 
 
-{-| Map a function onto a set, creating a new set with no duplicates.
+{-| Fold over the values in a set, in order from lowest to highest.
 -}
 foldr : (a -> b -> b) -> b -> AnySet comparable a -> b
 foldr f init (AnySet dict) =
