@@ -1,7 +1,7 @@
 {
     "type": "package",
     "name": "turboMaCk/any-set",
-    "summary": "Composing TEA modules with isolated state",
+    "summary": "Elm Set built on top of AnyDict",
     "license": "BSD-3-Clause",
     "version": "1.0.1",
     "exposed-modules": [
