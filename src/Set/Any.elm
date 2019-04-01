@@ -1,25 +1,12 @@
-module Set.Any
-    exposing
-        ( AnySet(..)
-        , diff
-        , empty
-        , filter
-        , foldl
-        , foldr
-        , fromList
-        , insert
-        , intersect
-        , isEmpty
-        , map
-        , member
-        , partition
-        , remove
-        , singleton
-        , size
-        , toList
-        , toSet
-        , union
-        )
+module Set.Any exposing
+    ( AnySet(..)
+    , empty, singleton, insert, remove
+    , isEmpty, member, size
+    , union, intersect, diff
+    , toList, fromList
+    , map, foldl, foldr, filter, partition
+    , toSet
+    )
 
 {-| A set of unique values. Similar to elm/core Set but allows arbitrary data
 given a function for converting to `comparable` can be provided.
@@ -85,7 +72,7 @@ and other are types within the constructor and you're good to go.
 @docs isEmpty, member, size
 
 
-# Compine
+# Combine
 
 @docs union, intersect, diff
 
@@ -120,7 +107,7 @@ type AnySet comparable t
 {-| Create an empty set.
 
 ** Note that it's important to make sure every key is turned to different comparable.
-Otherwise keys would conflict and overwritede each other.**
+Otherwise keys would conflict and overwrite each other.**
 
 -}
 empty : (a -> comparable) -> AnySet comparable a
@@ -131,7 +118,7 @@ empty =
 {-| Create a set with one value.
 
 ** Note that it's important to make sure every key is turned to different comparable.
-Otherwise keys would conflict and overwritede each other.**
+Otherwise keys would conflict and overwrite each other.**
 
 -}
 singleton : a -> (a -> comparable) -> AnySet comparable a
