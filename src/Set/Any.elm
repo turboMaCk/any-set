@@ -1,6 +1,6 @@
 module Set.Any exposing
     ( AnySet(..)
-    , empty, singleton, insert, remove, toggle
+    , empty, singleton, insert, remove, removeAll, toggle
     , isEmpty, member, size
     , union, intersect, diff
     , toList, fromList
@@ -64,7 +64,7 @@ and other are types within the constructor and you're good to go.
 
 # Build
 
-@docs empty, singleton, insert, remove, toggle
+@docs empty, singleton, insert, remove, removeAll, toggle
 
 
 # Query
@@ -99,6 +99,11 @@ import Set exposing (Set)
 
 
 {-| Represents a set of unique values.
+
+Be aware that AnyDict stores a function internally.
+If you want to use `(==)` for comparing two AnyDicts
+use [toDict](#toDict) function to convert them to regular `Dict` first.
+
 -}
 type AnySet comparable t
     = AnySet (AnyDict comparable t ())
@@ -106,8 +111,8 @@ type AnySet comparable t
 
 {-| Create an empty set.
 
-** Note that it's important to make sure every key is turned to different comparable.
-Otherwise keys would conflict and overwrite each other.**
+\*\* Note that it's important to make sure every key is turned to different comparable.\*\*
+Otherwise keys would conflict and overwrite each other.
 
 -}
 empty : (a -> comparable) -> AnySet comparable a
@@ -117,8 +122,8 @@ empty =
 
 {-| Create a set with one value.
 
-** Note that it's important to make sure every key is turned to different comparable.
-Otherwise keys would conflict and overwrite each other.**
+\*\* Note that it's important to make sure every key is turned to different comparable.\*\*
+Otherwise keys would conflict and overwrite each other.
 
 -}
 singleton : a -> (a -> comparable) -> AnySet comparable a
@@ -138,6 +143,17 @@ insert a (AnySet dict) =
 remove : a -> AnySet comparable a -> AnySet comparable a
 remove a (AnySet dict) =
     AnySet <| Dict.Any.remove a dict
+
+
+{-| Remove all entries from AnySet.
+
+Useful when you need to create new empty AnySet using
+same comparable function for key type.
+
+-}
+removeAll : AnySet comparable a -> AnySet comparable a
+removeAll (AnySet dict) =
+    AnySet <| Dict.Any.removeAll dict
 
 
 {-| Toggle a value in a set. If it's not found, it's inserted, else it's removed.
