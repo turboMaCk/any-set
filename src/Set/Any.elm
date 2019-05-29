@@ -1,6 +1,6 @@
 module Set.Any exposing
     ( AnySet(..)
-    , empty, singleton, insert, remove
+    , empty, singleton, insert, remove, toggle
     , isEmpty, member, size
     , union, intersect, diff
     , toList, fromList
@@ -64,7 +64,7 @@ and other are types within the constructor and you're good to go.
 
 # Build
 
-@docs empty, singleton, insert, remove
+@docs empty, singleton, insert, remove, toggle
 
 
 # Query
@@ -138,6 +138,17 @@ insert a (AnySet dict) =
 remove : a -> AnySet comparable a -> AnySet comparable a
 remove a (AnySet dict) =
     AnySet <| Dict.Any.remove a dict
+
+
+{-| Toggle a value in a set. If it's not found, it's inserted, else it's removed.
+-}
+toggle : a -> AnySet comparable a -> AnySet comparable a
+toggle a set =
+    if member a set then
+        remove a set
+
+    else
+        insert a set
 
 
 {-| Determine if a set is empty.
