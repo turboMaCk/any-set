@@ -17,7 +17,8 @@ Insert, remove, and query operations all take O(log n) time.
 # Converting Types to Comparable
 
 When writing a function for conversion from the type you want to use within a set to comparable
-it's very important to make sure every distinct member of the type produces different value in the set of comparables.
+**it's very important to make sure every distinct member of the type produces different value in the set of comparables**.
+Functions satisfying this property are called [injective](https://en.wikipedia.org/wiki/Injective_function).
 
 Take for instance those two examples:
 
@@ -100,9 +101,9 @@ import Set exposing (Set)
 
 {-| Represents a set of unique values.
 
-Be aware that AnyDict stores a function internally.
-If you want to use `(==)` for comparing two AnyDicts
-use [toDict](#toDict) function to convert them to regular `Dict` first.
+Be aware that AnySet stores a function internally.
+If you want to use `(==)` for comparing two AnySets
+use [toSet](#toSet) function to convert them to regular `Set` first.
 
 -}
 type AnySet comparable t
