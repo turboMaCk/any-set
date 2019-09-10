@@ -1,7 +1,7 @@
 module Set.Any exposing
     ( AnySet(..)
     , empty, singleton, insert, remove, removeAll, toggle
-    , isEmpty, member, size
+    , isEmpty, member, get, size
     , union, intersect, diff
     , toList, fromList
     , map, foldl, foldr, filter, partition
@@ -70,7 +70,7 @@ and other are types within the constructor and you're good to go.
 
 # Query
 
-@docs isEmpty, member, size
+@docs isEmpty, member, get, size
 
 
 # Combine
@@ -180,6 +180,20 @@ isEmpty (AnySet dict) =
 member : a -> AnySet comparable a -> Bool
 member a (AnySet dict) =
     Dict.Any.member a dict
+
+
+{-| Get a value from set.
+
+This is useful in case of `AnySet` because
+some parts of a value might not be used
+for generating comparable.
+This function allows quering `AnySet` with old
+value to obtain updated one in such cases.
+
+-}
+get : a -> AnySet comparable a -> Maybe a
+get a (AnySet dict) =
+    Dict.Any.getKey a dict
 
 
 {-| Determine the number of elements in a set.
