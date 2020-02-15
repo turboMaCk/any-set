@@ -6,6 +6,7 @@ module Set.Any exposing
     , toList, fromList
     , map, foldl, foldr, filter, partition
     , toSet
+    , encode, decode
     )
 
 {-| A set of unique values. Similar to elm/core Set but allows arbitrary data
@@ -92,12 +93,17 @@ and other are types within the constructor and you're good to go.
 
 @docs toSet
 
+# Json
+
+@docs encode, decode
+
 -}
 
 import Dict
 import Dict.Any exposing (AnyDict)
 import Set exposing (Set)
-
+import Json.Decode as Decode
+import Json.Encode as Encode
 
 {-| Represents a set of unique values.
 
@@ -284,3 +290,17 @@ toSet (AnySet dict) =
     Dict.Any.toDict dict
         |> Dict.keys
         |> Set.fromList
+
+
+{-| Encode an AnySet using a custom encode function for each set member -}
+encode : (a -> Encode.Value) -> AnySet comparable a-> Encode.Value
+encode encoder =
+  toList
+  >> Encode.list encoder
+
+{-| Decode an AnySet using a custom decoder -}
+decode : (a -> comparable) -> Decode.Decoder a -> Decode.Decoder (AnySet comparable a)
+decode conversion decoder =
+  Decode.map
+    (fromList conversion)
+    (Decode.list decoder)
