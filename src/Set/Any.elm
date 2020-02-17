@@ -294,7 +294,7 @@ toSet (AnySet dict) =
         |> Set.fromList
 
 
-{-| Encode an AnySet using a custom encode function for each set member
+{-| Turn `AnySet` into JSON array.
 -}
 encode : (a -> Encode.Value) -> AnySet comparable a -> Encode.Value
 encode encoder =
@@ -302,7 +302,7 @@ encode encoder =
         >> Encode.list encoder
 
 
-{-| Decode an AnySet using decoder
+{-| Decode `AnySet` from JSON array.
 -}
 decode : (a -> comparable) -> Decode.Decoder a -> Decode.Decoder (AnySet comparable a)
 decode conversion decoder =
