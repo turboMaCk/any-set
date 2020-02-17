@@ -93,6 +93,7 @@ and other are types within the constructor and you're good to go.
 
 @docs toSet
 
+
 # Json
 
 @docs encode, decode
@@ -101,9 +102,10 @@ and other are types within the constructor and you're good to go.
 
 import Dict
 import Dict.Any exposing (AnyDict)
-import Set exposing (Set)
 import Json.Decode as Decode
 import Json.Encode as Encode
+import Set exposing (Set)
+
 
 {-| Represents a set of unique values.
 
@@ -292,15 +294,18 @@ toSet (AnySet dict) =
         |> Set.fromList
 
 
-{-| Encode an AnySet using a custom encode function for each set member -}
-encode : (a -> Encode.Value) -> AnySet comparable a-> Encode.Value
+{-| Encode an AnySet using a custom encode function for each set member
+-}
+encode : (a -> Encode.Value) -> AnySet comparable a -> Encode.Value
 encode encoder =
-  toList
-  >> Encode.list encoder
+    toList
+        >> Encode.list encoder
 
-{-| Decode an AnySet using a custom decoder -}
+
+{-| Decode an AnySet using decoder
+-}
 decode : (a -> comparable) -> Decode.Decoder a -> Decode.Decoder (AnySet comparable a)
 decode conversion decoder =
-  Decode.map
-    (fromList conversion)
-    (Decode.list decoder)
+    Decode.map
+        (fromList conversion)
+        (Decode.list decoder)
