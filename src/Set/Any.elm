@@ -1,5 +1,5 @@
 module Set.Any exposing
-    ( AnySet(..)
+    ( AnySet(..), equal
     , empty, singleton, insert, remove, removeAll, toggle
     , isEmpty, member, get, size
     , union, intersect, diff
@@ -7,7 +7,6 @@ module Set.Any exposing
     , map, foldl, foldr, filter, partition
     , toSet
     , decode, encode
-    , equal
     )
 
 {-| A set of unique values. Similar to elm/core Set but allows arbitrary data
@@ -62,7 +61,7 @@ and other are types within the constructor and you're good to go.
 
 # AnySet
 
-@docs AnySet
+@docs AnySet, equal
 
 
 # Build
