@@ -7,6 +7,7 @@ module Set.Any exposing
     , map, foldl, foldr, filter, partition
     , toSet
     , decode, encode
+    , equal
     )
 
 {-| A set of unique values. Similar to elm/core Set but allows arbitrary data
@@ -110,12 +111,19 @@ import Set exposing (Set)
 {-| Represents a set of unique values.
 
 Be aware that AnySet stores a function internally.
-If you want to use `(==)` for comparing two AnySets
-use [toSet](#toSet) function to convert them to regular `Set` first.
+This means it's not possible to use `(==)` for comparing two AnySets.
+Use [qual](#qual) function instead.
 
 -}
 type AnySet comparable t
     = AnySet (AnyDict comparable t ())
+
+
+{-| Check equality of two `AnySet`s
+-}
+equal : AnySet comparable t -> AnySet comparable t -> Bool
+equal (AnySet a) (AnySet b) =
+    Dict.Any.equal a b
 
 
 {-| Create an empty set.
