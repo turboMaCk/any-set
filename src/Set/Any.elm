@@ -111,7 +111,7 @@ import Set exposing (Set)
 
 Be aware that AnySet stores a function internally.
 This means it's not possible to use `(==)` for comparing two AnySets.
-Use [qual](#qual) function instead.
+Use [equal](#equal) function instead.
 
 -}
 type AnySet comparable t
