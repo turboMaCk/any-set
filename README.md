@@ -1,5 +1,7 @@
 # AnySet
 
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2FturboMaCk%2Fany-set%2Fbadge&style=flat)](https://actions-badge.atrox.dev/turboMaCk/any-set/goto)
+
 Alternative set implementation for type-safe sets of any type.
 
 This library solves the same problem as [truqu/elm-dictset](https://package.elm-lang.org/packages/truqu/elm-dictset/latest/)
