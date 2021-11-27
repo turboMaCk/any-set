@@ -4,7 +4,7 @@ module Set.Any exposing
     , isEmpty, member, get, size, any, all
     , union, intersect, diff
     , toList, fromList
-    , map, foldl, foldr, filter, partition
+    , map, foldl, foldr, filter, partition, filterMap
     , toSet
     , decode, encode
     )
@@ -86,7 +86,7 @@ and other are types within the constructor and you're good to go.
 
 # Transform
 
-@docs map, foldl, foldr, filter, partition
+@docs map, foldl, foldr, filter, partition, filterMap
 
 
 # Set
@@ -218,7 +218,7 @@ size (AnySet dict) =
     Dict.Any.size dict
 
 
-{-| Find out if there is any instance of something in a Set.
+{-| Find out if there is any instance of something in a set.
 
     type Animal = Cat | Mouse | Dog
 
@@ -249,7 +249,7 @@ any predicate (AnySet dict) =
     Dict.Any.any (\k _ -> predicate k) dict
 
 
-{-| Find out if all values in Set match a predicate.
+{-| Find out if all values in set match a predicate.
 
     type Animal = Cat | Mouse | Dog
 
@@ -330,6 +330,50 @@ map : (b -> comparable2) -> (a -> b) -> AnySet comparable a -> AnySet comparable
 map toComparable f =
     fromList toComparable << foldl (\x xs -> f x :: xs) []
 
+{-| Apply a function that may or may not succeed to all entries in a set, but only keep the successes.
+
+    type Animal = Cat | Mouse | Dog
+
+    animalToInt : Animal -> Int
+    animalToInt animal =
+        case animal of
+            Cat -> 0
+            Mouse -> 1
+            Dog -> 2
+
+    animals : AnySet Int Animal
+    animals =
+        [ Cat, Mouse ]
+            |> fromList animalToInt
+
+    onlyTom : AnySet String String
+    onlyTom =
+        [ "Tom" ]
+            |> fromList identity
+
+    getCatName : Animal -> Maybe String
+    getCatName animal =
+        case animal of
+            Cat -> Just "Tom"
+            _ -> Nothing
+
+    filterMap identity getCatName animals == onlyTom
+    --> True
+
+-}
+filterMap : (b -> comparable) -> (a -> Maybe b) -> AnySet comparable2 a -> AnySet comparable b
+filterMap toComparable f set =
+    foldl
+        (\v acc ->
+            case f v of
+                Just newVal ->
+                    insert newVal acc
+
+                Nothing ->
+                    acc
+        )
+        (empty toComparable)
+        set
 
 {-| Fold over the values in a set, in order from highest to lowest.
 -}
