@@ -1,7 +1,7 @@
 module Set.Any exposing
     ( AnySet(..), equal
     , empty, singleton, insert, remove, removeAll, toggle
-    , isEmpty, member, get, size
+    , isEmpty, member, get, size, any, all
     , union, intersect, diff
     , toList, fromList
     , map, foldl, foldr, filter, partition
@@ -71,7 +71,7 @@ and other are types within the constructor and you're good to go.
 
 # Query
 
-@docs isEmpty, member, get, size
+@docs isEmpty, member, get, size, any, all
 
 
 # Combine
@@ -216,6 +216,76 @@ get a (AnySet dict) =
 size : AnySet comparable a -> Int
 size (AnySet dict) =
     Dict.Any.size dict
+
+
+{-| Find out if there is any instance of something in a Set.
+
+    type Animal = Cat | Mouse | Dog
+
+    animalToInt : Animal -> Int
+    animalToInt animal =
+        case animal of
+            Cat -> 0
+            Mouse -> 1
+            Dog -> 2
+
+    animals : AnySet Int Animal
+    animals =
+        [ Cat, Mouse ]
+            |> fromList animalToInt
+
+    isACat : Animal -> Bool
+    isACat animal =
+        case animal of
+            Cat -> True
+            _ -> False
+
+    any isACat animals
+    --> True
+
+-}
+any : (v -> Bool) -> AnySet comparable v -> Bool
+any predicate (AnySet dict) =
+    Dict.Any.any (\k _ -> predicate k) dict
+
+
+{-| Find out if all values in Set match a predicate.
+
+    type Animal = Cat | Mouse | Dog
+
+    animalToInt : Animal -> Int
+    animalToInt animal =
+        case animal of
+            Cat -> 0
+            Mouse -> 1
+            Dog -> 2
+
+    animals : AnySet Int Animal
+    animals =
+        [ Cat, Mouse ]
+            |> fromList animalToInt
+
+    aristocats : AnySet Int Animal
+    aristocats =
+        [ Cat ]
+            |> fromList animalToInt
+
+    isACat : Animal -> Bool
+    isACat animal =
+        case animal of
+            Cat -> True
+            _ -> False
+
+    all isACat animals
+    --> False
+
+    all isACat aristocats
+    --> True
+
+-}
+all : (v -> Bool) -> AnySet comparable v -> Bool
+all predicate (AnySet dict) =
+    Dict.Any.all (\k _ -> predicate k) dict
 
 
 {-| Get the union of two sets. Keep all values.
