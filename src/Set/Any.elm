@@ -330,6 +330,7 @@ map : (b -> comparable2) -> (a -> b) -> AnySet comparable a -> AnySet comparable
 map toComparable f =
     fromList toComparable << foldl (\x xs -> f x :: xs) []
 
+
 {-| Apply a function that may or may not succeed to all entries in a set, but only keep the successes.
 
     type Animal = Cat | Mouse | Dog
@@ -374,6 +375,7 @@ filterMap toComparable f set =
         )
         (empty toComparable)
         set
+
 
 {-| Fold over the values in a set, in order from highest to lowest.
 -}
