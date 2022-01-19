@@ -2,7 +2,7 @@ module Set.Any exposing
     ( AnySet(..), equal
     , empty, singleton, insert, remove, removeAll, toggle
     , isEmpty, member, get, size, any, all
-    , union, intersect, diff
+    , union, intersect, diff, fullOuterJoin
     , toList, fromList
     , map, foldl, foldr, filter, partition, filterMap
     , toSet
@@ -76,7 +76,7 @@ and other are types within the constructor and you're good to go.
 
 # Combine
 
-@docs union, intersect, diff
+@docs union, intersect, diff, fullOuterJoin
 
 
 # Lists
@@ -308,6 +308,43 @@ that do not appear in the second set.
 diff : AnySet comparable a -> AnySet comparable a -> AnySet comparable a
 diff (AnySet d1) (AnySet d2) =
     AnySet <| Dict.Any.diff d1 d2
+
+
+{-| Get the full outer join between the first set and the second. Keeps values
+from the first set that do not appear in the second set, and values from the
+second set that do not appear in the first set.
+
+    type Animal = Cat | Mouse | Dog
+
+    animalToInt : Animal -> Int
+    animalToInt animal =
+        case animal of
+            Cat -> 0
+            Mouse -> 1
+            Dog -> 2
+
+    animals : AnySet Int Animal
+    animals =
+        [ Cat, Mouse ]
+            |> fromList animalToInt
+
+    moreAnimals : AnySet Int Animal
+    moreAnimals =
+        [ Mouse, Dog ]
+            |> fromList animalToInt
+
+    diffAnimals : AnySet Int Animal
+    diffAnimals =
+        [ Cat, Mouse, Dog ]
+            |> fromList animalToInt
+
+    fullOuterJoin animals moreAnimals == diffAnimals
+    --> True
+
+-}
+fullOuterJoin : AnySet comparable a -> AnySet comparable a -> AnySet comparable a
+fullOuterJoin set1 set2 =
+    union (diff set2 set1) set1
 
 
 {-| Convert a set into a list, sorted from lowest to highest.
