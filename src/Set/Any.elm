@@ -2,7 +2,7 @@ module Set.Any exposing
     ( AnySet(..), equal
     , empty, singleton, insert, remove, removeAll, toggle
     , isEmpty, member, get, size, any, all
-    , union, intersect, diff
+    , union, intersect, diff, symDifference
     , toList, fromList
     , map, foldl, foldr, filter, partition, filterMap
     , toSet
@@ -76,7 +76,7 @@ and other are types within the constructor and you're good to go.
 
 # Combine
 
-@docs union, intersect, diff
+@docs union, intersect, diff, symDifference
 
 
 # Lists
@@ -308,6 +308,45 @@ that do not appear in the second set.
 diff : AnySet comparable a -> AnySet comparable a -> AnySet comparable a
 diff (AnySet d1) (AnySet d2) =
     AnySet <| Dict.Any.diff d1 d2
+
+
+{-| In Math, the symmetric difference of two sets, also known as _disjunctive union_ is the set
+of elements which are in either of the sets, but not in their intersection. For example, the
+symmetric difference of the sets {1,2,3} and {3,4} is {1,2,4}.
+
+See <https://en.m.wikipedia.org/wiki/Symmetric_difference> for more reference.
+
+    type Animal = Cat | Mouse | Dog
+
+    animalToInt : Animal -> Int
+    animalToInt animal =
+        case animal of
+            Cat -> 0
+            Mouse -> 1
+            Dog -> 2
+
+    animals : AnySet Int Animal
+    animals =
+        [ Cat, Mouse ]
+            |> fromList animalToInt
+
+    moreAnimals : AnySet Int Animal
+    moreAnimals =
+        [ Mouse, Dog ]
+            |> fromList animalToInt
+
+    diffAnimals : AnySet Int Animal
+    diffAnimals =
+        [ Cat, Mouse, Dog ]
+            |> fromList animalToInt
+
+    symDifference animals moreAnimals == diffAnimals
+    --> True
+
+-}
+symDifference : AnySet comparable a -> AnySet comparable a -> AnySet comparable a
+symDifference set1 set2 =
+    union (diff set2 set1) set1
 
 
 {-| Convert a set into a list, sorted from lowest to highest.
