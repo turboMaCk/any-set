@@ -3,7 +3,7 @@
     "name": "turboMaCk/any-set",
     "summary": "Elm Set built on top of AnyDict",
     "license": "BSD-3-Clause",
-    "version": "1.6.0",
+    "version": "1.6.1",
     "exposed-modules": [
         "Set.Any"
     ],
